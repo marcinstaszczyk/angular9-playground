@@ -1,0 +1,18 @@
+<form [formGroup]="form">
+  <mas-input controlName="firstName" label="First Name"></mas-input>
+
+  <mas-input name="surname" label="Surname"></mas-input>
+
+  <div formGroupName="address">
+    Address:
+    <mas-input name="street" label="Street"></mas-input>
+    <mas-input name="city" label="City"></mas-input>
+  </div>
+
+  Form Value: {{ form.value | json }}<br/>
+  Form Errors: {{ form.status | json }}<br/>
+
+  <input formControlName="aaa">
+  touched: {{form.controls['aaa'].touched}}<br/>
+
+</form>

@@ -1,0 +1,6 @@
+<div class="mas-form-group">
+  <label *ngIf="label" [for]="id">{{label}}:</label>
+  <input [id]="id" type="text" [attr.name]="name" class="mas-input" [formControl]="control">
+  <mas-validation-messages [control]="control" [label]="label"></mas-validation-messages>
+  touched: {{control.touched}}<br/>
+</div>
