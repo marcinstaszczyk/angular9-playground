@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Host, Input, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Input, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
 import {
   AbstractFormGroupDirective,
   ControlContainer,
@@ -9,6 +9,9 @@ import {
   FormGroupName,
   Validators
 } from '@angular/forms';
+import { ComponentBase } from '../base/ComponentBase';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 let inputCounter = 0;
 
@@ -16,9 +19,9 @@ let inputCounter = 0;
   selector: 'mas-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputComponent implements OnInit, OnDestroy {
+export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
 
   @Input() id = 'input' + ++inputCounter;
   @Input() name;
@@ -28,9 +31,15 @@ export class InputComponent implements OnInit, OnDestroy {
   @Input() disabled: boolean;
 
   control: FormControl;
+  touched$: Observable<boolean>;
+  private touchedSubject$: BehaviorSubject<boolean>;
+
   private controlSelfAdded = false;
 
-  constructor(@Optional() @Host() @SkipSelf() private parentControlContainer: ControlContainer) { }
+  constructor(@Optional() @Host() @SkipSelf() private readonly parentControlContainer: ControlContainer,
+              private readonly changeDetectorRef: ChangeDetectorRef) {
+    super();
+  }
 
   ngOnInit(): void {
     if (!this.name && !this.controlName) {
@@ -47,6 +56,11 @@ export class InputComponent implements OnInit, OnDestroy {
       this.controlSelfAdded = true;
       formGroup.addControl(this.formControlName, this.control);
     }
+
+    this.touchedSubject$ = new BehaviorSubject(this.control.touched);
+    this.touched$ = this.touchedSubject$.pipe(
+      distinctUntilChanged()
+    );
   }
 
   get formControlName() {
@@ -69,6 +83,11 @@ export class InputComponent implements OnInit, OnDestroy {
     }
 
     return null;
+  }
+
+  onInputBlur() {
+    // TODO FIXME what about touched changed from outside !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    this.touchedSubject$.next(this.control.touched);
   }
 
   // get formDirective(): any {

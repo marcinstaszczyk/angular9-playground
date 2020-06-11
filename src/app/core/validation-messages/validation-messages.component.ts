@@ -1,42 +1,50 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {FormControl, ValidationErrors} from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import VALIDATION_MESSAGES from './validation-messages';
-import {Observable, of, merge} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Observable, of, merge, interval } from 'rxjs';
+import { map, startWith, tap } from 'rxjs/operators';
+import { ComponentBase } from '../base/ComponentBase';
 
 @Component({
-  selector: 'mas-validation-messages',
+  selector: 'mas-validation-messages[control][show]',
   templateUrl: './validation-messages.component.html',
   styleUrls: ['./validation-messages.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ValidationMessagesComponent implements OnInit {
+export class ValidationMessagesComponent extends ComponentBase implements OnInit {
 
   @Input() control: FormControl;
-  @Input() label: string;
+  @Input() show: boolean;
 
   message$: Observable<string>;
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  // counter$: Observable<number>;
+
+  constructor(private changeDetector: ChangeDetectorRef) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.message$ = merge(of(1), this.control.statusChanges).pipe(
-      map(this.getMessage)
+    this.message$ = this.control.statusChanges.pipe(
+      startWith(1),
+      map(this.getMessage),
+      tap(() => this.changeDetector.markForCheck())
     );
+    // this.counter$ = interval(1000).pipe(
+    //   // tap(() => this.changeDetector.detectChanges()),
+    //   // tap((value) => console.log(value))
+    // );
   }
 
   getMessage = () => {
-    console.log('ValidationMessagesComponent.getMessage');
-    if (!this.control.touched) {
-      return null;
-    }
+    // console.log('ValidationMessagesComponent.getMessage');
     const errors = this.control.errors;
     if (!errors) {
       return null;
     }
     const errorKey = Object.keys(errors)[0];
     const messageFunction = VALIDATION_MESSAGES[errorKey] || VALIDATION_MESSAGES.DEFAULT;
-    return messageFunction(this.label, errorKey, errors[errorKey]);
-  }
+    return messageFunction(errorKey, errors[errorKey]);
+  };
 
 }

@@ -1,20 +1,23 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ComponentBase } from '../core/base/ComponentBase';
 
 @Component({
   selector: 'mas-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormComponent implements OnInit {
+export class FormComponent extends ComponentBase implements OnInit {
 
   form = new FormGroup({
     address: new FormGroup({}),
     aaa: new FormControl('', [Validators.required])
   });
 
-  constructor(formBuilder: FormBuilder) {}
+  constructor(formBuilder: FormBuilder) {
+    super();
+  }
 
   ngOnInit(): void {
   }
