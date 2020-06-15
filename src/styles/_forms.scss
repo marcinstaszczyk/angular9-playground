@@ -1,0 +1,41 @@
+@use "variables" as var;
+
+.mas-form-group {
+  padding-bottom: .3em;
+
+  &__label {
+    font-weight: 600;
+
+    &--required::after {
+      content: "*";
+      color: var.$color-errors;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    font-size: 1em;
+    padding: .2em .4em;
+  }
+
+  &__error {
+    display: block;
+    font-size: (14em / 16);
+    line-height: 1.3;
+    min-height: 1.3em;
+    color: var.$color-errors;
+  }
+}
+
+.mas-form-grid {
+  @media (min-width: 500px) {
+    $grid-gutter: 1em;
+    display: flex;
+    margin-right: -$grid-gutter;
+
+    &__item {
+      width: calc(50% - #{$grid-gutter});
+      margin-right: $grid-gutter;
+    }
+  }
+}

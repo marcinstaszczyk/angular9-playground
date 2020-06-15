@@ -1,5 +1,21 @@
 <div class="mas-form-group">
-  <label *ngIf="label" [for]="id">{{label}}:</label>
-  <input [id]="id" type="text" [attr.name]="name" class="mas-input" [formControl]="control">
-  <mas-validation-messages [control]="control"></mas-validation-messages>
+
+  <label *ngIf="label"
+         class="mas-form-group__label"
+         [class.mas-form-group__label--required]="true"
+         [for]="id">{{label}}</label>
+
+  <input type="text"
+         class="mas-form-group__input"
+         [id]="id"
+         [formControl]="control"
+         [attr.name]="name"
+         [attr.aria-describedby]="id + '--error'">
+
+  <mas-validation-messages
+    class="mas-form-group__error"
+    [control]="control"
+    [id]="id + '--error'">
+  </mas-validation-messages>
+
 </div>

@@ -1,18 +1,30 @@
-<form [formGroup]="form">
-  <mas-input controlName="firstName" label="First Name"></mas-input>
+<h2>Form</h2>
 
-  <mas-input name="surname" label="Surname"></mas-input>
+<form [formGroup]="form">
+
+  <div class="mas-form-grid">
+    <mas-input class="mas-form-grid__item"
+               controlName="firstName"
+               label="First Name"></mas-input>
+    <mas-input class="mas-form-grid__item"
+               name="surname"
+               label="Surname"></mas-input>
+  </div>
 
   <div formGroupName="address">
-    Address:
+    <h3>Address:</h3>
     <mas-input name="street" label="Street"></mas-input>
     <mas-input name="city" label="City"></mas-input>
   </div>
-
-  Form Value: {{ form.value | json }}<br/>
-  Form Errors: {{ form.status | json }}<br/>
-
-  <input formControlName="aaa">
-  touched: {{form.controls['aaa'].touched}}<br/>
-
 </form>
+
+Form status: {{ form.status | json }}<br/>
+Form value: {{ form.value | json }}<br/>
+
+<br/>
+TODO:
+<ol>
+  <li>Validators as parameter</li>
+  <li>Special for required validator</li>
+  <li>Cross fields validation</li>
+</ol>

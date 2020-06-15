@@ -1,8 +1,8 @@
 const VALIDATION_MESSAGES: {[key: string]: ValidationMessageFunction} = {
   required: m`Field is required.`,
-  minlength: m`Field must be at least ${'requiredLength'} characters long.`,
-  maxlength: m`Field must be at most ${'requiredLength'} characters long.`,
-  email: m`Field must be a proper email`,
+  minlength: m`Must be at least ${'requiredLength'} characters long.`,
+  maxlength: m`Must be at most ${'requiredLength'} characters long.`,
+  email: m`Must be a proper email`,
   DEFAULT: m`Field have validation error: ${'errorKey'}`
 };
 
