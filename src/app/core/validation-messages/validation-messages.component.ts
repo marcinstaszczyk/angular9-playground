@@ -5,8 +5,10 @@ import { Observable, of, merge, interval } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 import { ComponentBase } from '../base/ComponentBase';
 
+
+
 @Component({
-  selector: 'mas-validation-messages[control][show]',
+  selector: 'mas-validation-messages[control]',
   templateUrl: './validation-messages.component.html',
   styleUrls: ['./validation-messages.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -14,7 +16,6 @@ import { ComponentBase } from '../base/ComponentBase';
 export class ValidationMessagesComponent extends ComponentBase implements OnInit {
 
   @Input() control: FormControl;
-  @Input() show: boolean;
 
   message$: Observable<string>;
 
@@ -28,7 +29,6 @@ export class ValidationMessagesComponent extends ComponentBase implements OnInit
     this.message$ = this.control.statusChanges.pipe(
       startWith(1),
       map(this.getMessage),
-      tap(() => this.changeDetector.markForCheck())
     );
     // this.counter$ = interval(1000).pipe(
     //   // tap(() => this.changeDetector.detectChanges()),
@@ -39,12 +39,12 @@ export class ValidationMessagesComponent extends ComponentBase implements OnInit
   getMessage = () => {
     // console.log('ValidationMessagesComponent.getMessage');
     const errors = this.control.errors;
-    if (!errors) {
+    if (!errors || !this.control.touched) {
       return null;
     }
     const errorKey = Object.keys(errors)[0];
     const messageFunction = VALIDATION_MESSAGES[errorKey] || VALIDATION_MESSAGES.DEFAULT;
     return messageFunction(errorKey, errors[errorKey]);
-  };
+  }
 
 }

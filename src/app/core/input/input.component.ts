@@ -10,8 +10,6 @@ import {
   Validators
 } from '@angular/forms';
 import { ComponentBase } from '../base/ComponentBase';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 let inputCounter = 0;
 
@@ -31,8 +29,6 @@ export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
   @Input() disabled: boolean;
 
   control: FormControl;
-  touched$: Observable<boolean>;
-  private touchedSubject$: BehaviorSubject<boolean>;
 
   private controlSelfAdded = false;
 
@@ -45,22 +41,19 @@ export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
     if (!this.name && !this.controlName) {
       throw new Error('Attribute "name" or "controlName" for "mas-input" is required');
     }
+    if (!this.formGroup) {
+      this.formGroup = this.getFormGroupFromParent();
+    }
     this.control = new FormControl('', [Validators.required, Validators.minLength(2), Validators.email]);
     // this.control.registerOnChange(this.onInputChange);
     // if (this.formGroup) {
     //   this.formGroup.addControl(this.name, this.control);
     // }
-    const formGroup = this.formGroupOrParent;
-    if (formGroup && !formGroup.contains(this.formControlName)) {
+    if (this.formGroup && !this.formGroup.contains(this.formControlName)) {
       // this._setUpControl();
       this.controlSelfAdded = true;
-      formGroup.addControl(this.formControlName, this.control);
+      this.formGroup.addControl(this.formControlName, this.control);
     }
-
-    this.touchedSubject$ = new BehaviorSubject(this.control.touched);
-    this.touched$ = this.touchedSubject$.pipe(
-      distinctUntilChanged()
-    );
   }
 
   get formControlName() {
@@ -68,26 +61,19 @@ export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.controlSelfAdded && this.formGroupOrParent) {
-      this.formGroupOrParent.removeControl(this.name);
+    if (this.controlSelfAdded) {
+      this.formGroup.removeControl(this.name);
     }
   }
 
-  get formGroupOrParent(): FormGroup {
-    if (this.formGroup) {
-      return this.formGroup;
-    } else if (this.parentControlContainer instanceof FormGroupDirective) {
+  getFormGroupFromParent(): FormGroup {
+    if (this.parentControlContainer instanceof FormGroupDirective) {
       return this.parentControlContainer.form;
     } else if (this.parentControlContainer instanceof FormGroupName) {
       return this.parentControlContainer.control;
     }
 
     return null;
-  }
-
-  onInputBlur() {
-    // TODO FIXME what about touched changed from outside !!!!!!!!!!!!!!!!!!!!!!!!!!!
-    this.touchedSubject$.next(this.control.touched);
   }
 
   // get formDirective(): any {

@@ -1,6 +1,4 @@
-<ng-container *ngIf="show">
-  <div *ngIf="(message$ | async2) as message">
-    {{message}}
-  </div>
-</ng-container>
+<div *ngIf="(message$ | async) as message">
+  {{message}}
+</div>
 <!--{{counter$ | async2}}-->

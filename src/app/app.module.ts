@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { InputComponent } from './core/input/input.component';
 import { FormComponent } from './form/form.component';
 import { ValidationMessagesComponent } from './core/validation-messages/validation-messages.component';
-import { AsyncPipe2 } from './core/pipes/Async';
+import './core/angular/AbstractControl-modified';
+import './core/angular/AsyncPipe-modified';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,6 @@ import { AsyncPipe2 } from './core/pipes/Async';
     InputComponent,
     FormComponent,
     ValidationMessagesComponent,
-    AsyncPipe2
   ],
   imports: [
     BrowserModule,
