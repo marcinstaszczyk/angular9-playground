@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ComponentBase } from '../core/base/ComponentBase';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BaseComponent } from '../core/base/BaseComponent';
 
 @Component({
   selector: 'mas-form',
@@ -8,18 +8,24 @@ import { ComponentBase } from '../core/base/ComponentBase';
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormComponent extends ComponentBase implements OnInit {
+export class FormComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   form = new FormGroup({
     address: new FormGroup({}),
-    aaa: new FormControl('', [Validators.required])
   });
 
-  constructor(formBuilder: FormBuilder) {
+  value: any;
+
+  constructor(public changeDetectorRef: ChangeDetectorRef, formBuilder: FormBuilder) {
     super();
   }
 
   ngOnInit(): void {
   }
+
+  ngAfterViewInit() {
+    this.async('value', this.form.valueChanges);
+  }
+
 
 }

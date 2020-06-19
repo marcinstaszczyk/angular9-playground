@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import VALIDATION_MESSAGES from './validation-messages';
-import { Observable, of, merge, interval } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
-import { ComponentBase } from '../base/ComponentBase';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { BaseComponent } from '../base/BaseComponent';
 
 
 
@@ -13,31 +13,24 @@ import { ComponentBase } from '../base/ComponentBase';
   styleUrls: ['./validation-messages.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ValidationMessagesComponent extends ComponentBase implements OnInit {
+export class ValidationMessagesComponent extends BaseComponent implements OnInit {
 
   @Input() control: FormControl;
 
-  message$: Observable<string>;
+  message: string;
 
-  // counter$: Observable<number>;
-
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(public changeDetectorRef: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit(): void {
-    this.message$ = this.control.statusChanges.pipe(
+    this.async('message', this.control.statusChanges.pipe(
       startWith(1),
       map(this.getMessage),
-    );
-    // this.counter$ = interval(1000).pipe(
-    //   // tap(() => this.changeDetector.detectChanges()),
-    //   // tap((value) => console.log(value))
-    // );
+    ));
   }
 
   getMessage = () => {
-    // console.log('ValidationMessagesComponent.getMessage');
     const errors = this.control.errors;
     if (!errors || !this.control.touched) {
       return null;

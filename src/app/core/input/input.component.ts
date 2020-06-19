@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Host, Input, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Host,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SkipSelf
+} from '@angular/core';
 import {
   AbstractFormGroupDirective,
   ControlContainer,
@@ -9,7 +18,7 @@ import {
   FormGroupName,
   Validators
 } from '@angular/forms';
-import { ComponentBase } from '../base/ComponentBase';
+import { BaseComponent } from '../base/BaseComponent';
 
 let inputCounter = 0;
 
@@ -19,7 +28,7 @@ let inputCounter = 0;
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
+export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
 
   @Input() id = 'input' + ++inputCounter;
   @Input() name;
@@ -32,8 +41,7 @@ export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
 
   private controlSelfAdded = false;
 
-  constructor(@Optional() @Host() @SkipSelf() private readonly parentControlContainer: ControlContainer,
-              private readonly changeDetectorRef: ChangeDetectorRef) {
+  constructor(@Optional() @Host() @SkipSelf() private readonly parentControlContainer: ControlContainer) {
     super();
   }
 
@@ -45,12 +53,7 @@ export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
       this.formGroup = this.getFormGroupFromParent();
     }
     this.control = new FormControl('', [Validators.required, Validators.minLength(2), Validators.email]);
-    // this.control.registerOnChange(this.onInputChange);
-    // if (this.formGroup) {
-    //   this.formGroup.addControl(this.name, this.control);
-    // }
     if (this.formGroup && !this.formGroup.contains(this.formControlName)) {
-      // this._setUpControl();
       this.controlSelfAdded = true;
       this.formGroup.addControl(this.formControlName, this.control);
     }
@@ -98,9 +101,5 @@ export class InputComponent extends ComponentBase implements OnInit, OnDestroy {
   //   if (this.control.disabled) {
   //     this.disabled = true;
   //   }
-  // }
-
-  // onInputChange() {
-  //
   // }
 }
