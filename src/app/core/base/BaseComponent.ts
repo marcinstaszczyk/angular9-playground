@@ -14,12 +14,13 @@ export class BaseComponent implements DoCheck, OnDestroy {
     this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 
-  protected async<T extends { changeDetectorRef: ChangeDetectorRef } & BaseComponent, K extends keyof T>(this: T, property: K, observable: Observable<T[K]>) {
+  protected async<T extends BaseComponentWithChangeDetector, K extends keyof T>(this: T, property: K, observable: Observable<T[K]>) {
     this.subscriptions.push(observable.subscribe(value => {
       this[property] = value;
       this.changeDetectorRef.detectChanges();
       // markDirty(this);
     }));
   }
-
 }
+
+type BaseComponentWithChangeDetector = { changeDetectorRef: ChangeDetectorRef } & BaseComponent;

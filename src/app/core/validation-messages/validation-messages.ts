@@ -6,9 +6,9 @@ const VALIDATION_MESSAGES: {[key: string]: ValidationMessageFunction} = {
   DEFAULT: m`Field have validation error: ${'errorKey'}`
 };
 
-function m(strings, ...keys) {
+function m(strings: TemplateStringsArray, ...keys: any[]) {
   return (errorKey: string, errorDetails: any) => {
-    const result = [strings[0]];
+    const result: string[] = [strings[0]];
     keys.forEach((key, i) => {
       switch (key) {
         case 'details':

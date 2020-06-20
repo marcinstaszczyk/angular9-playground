@@ -16,10 +16,14 @@
     <mas-input name="street" label="Street"></mas-input>
     <mas-input name="city" label="City"></mas-input>
   </div>
+
+  <button (click)="submit()">Submit</button>
 </form>
+<br/>
 
 Form status: {{ form.status | json }}<br/>
 Form value: {{ value | json }}<br/>
+Form submitted: {{ submitted}}<br/>
 
 <br/>
 TODO:

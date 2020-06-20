@@ -5,9 +5,12 @@ import { AsyncPipe } from '@angular/common';
 // @ts-ignore
 // tslint:disable-next-line:ban-types
 AsyncPipe.prototype._updateLatestValue = function(async: any, value: Object) {
+  // @ts-ignore
   if (async === this._obj) {
+    // @ts-ignore
     this._latestValue = value;
     // markDirty(this);
+    // @ts-ignore
     this._ref.detectChanges();
   }
 };
