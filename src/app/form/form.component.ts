@@ -1,7 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { BaseComponent } from '../core/base/BaseComponent';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'mas-form',
@@ -9,13 +8,16 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class FormComponent extends BaseComponent implements OnInit {
+
+  emailValidator = Validators.email;
+  twoValidators = [Validators.minLength(5), Validators.email];
 
   form = new FormGroup({
     address: new FormGroup({}),
+    crossValidation: new FormGroup({}),
   });
 
-  value: any;
   submitted = false;
 
   constructor(public changeDetectorRef: ChangeDetectorRef, formBuilder: FormBuilder) {
@@ -23,12 +25,6 @@ export class FormComponent extends BaseComponent implements OnInit, AfterViewIni
   }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit() {
-    this.async('value', this.form.valueChanges.pipe(
-      tap(() => this.submitted = false)
-    ));
   }
 
   submit() {
@@ -40,4 +36,24 @@ export class FormComponent extends BaseComponent implements OnInit, AfterViewIni
     }
   }
 
+  setValue() {
+    const emailControl = this.form.get('email')!;
+    emailControl.setValue('Incorrect value');
+    emailControl.markAsTouched();
+  }
+
+  get field1Control(): FormControl {
+    return this.form.get('crossValidation')!.get('field1') as FormControl;
+  }
+
+  field1EqField2Validator: ValidatorFn = (field2Control: AbstractControl) => {
+    const field1Value = this.field1Control.value;
+    if (field2Control.value !== field1Value) {
+      return { equality: 'error' };
+    } else {
+      return null;
+    }
+  }
 }
+
+

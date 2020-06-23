@@ -5,30 +5,87 @@
   <div class="mas-form-grid">
     <mas-input class="mas-form-grid__item"
                controlName="firstName"
-               label="First Name"></mas-input>
+               label="First Name"
+               placeholder="Some placeholder"
+               required="true"
+    ></mas-input>
     <mas-input class="mas-form-grid__item"
                name="surname"
-               label="Surname"></mas-input>
+               label="Surname"
+               required="true"
+    ></mas-input>
   </div>
+
+  <div class="mas-form-grid">
+    <mas-input class="mas-form-grid__item" style="flex-grow: 1"
+               name="email"
+               label="Email"
+               required="true"
+               [validators]="emailValidator"
+    ></mas-input>
+    <button class="mas-form-grid__item mas-form-grid__button" (click)="setValue()">Set some value</button>
+  </div>
+
+  <mas-input name="twoValidators"
+             label="Two validators"
+             required="true"
+             placeholder="Email with 5 characters or more"
+             [validators]="twoValidators"
+  ></mas-input>
 
   <div formGroupName="address">
     <h3>Address:</h3>
-    <mas-input name="street" label="Street"></mas-input>
-    <mas-input name="city" label="City"></mas-input>
+    <mas-input name="street" label="Street" required="true"></mas-input>
+    <mas-input name="city" label="City" required="true"></mas-input>
+  </div>
+
+  <div formGroupName="crossValidation">
+    <h3>Cross validation:</h3>
+    <mas-input name="field1" label="Field1" required="true"></mas-input>
+    <mas-input name="field2"
+               label="Field2"
+               required="true"
+               [validators]="field1EqField2Validator"
+               [validationDependencies]="field1Control"
+    ></mas-input>
   </div>
 
   <button (click)="submit()">Submit</button>
 </form>
 <br/>
 
-Form status: {{ form.status | json }}<br/>
-Form value: {{ value | json }}<br/>
-Form submitted: {{ submitted}}<br/>
+<mas-form-status [form]="form" [submitted]="submitted"></mas-form-status>
 
 <br/>
 TODO:
 <ol>
+  <li>Single switch (select/radio) without form</li>
+  <li>Initial form value?</li>
+  <li>Change on required & disabled (disabled deactivates validation)</li>
+  <li>Submit button</li>
+  <li>Second input (select) and multiple inputs generalisation</li>
+  <li>(optional) Automatic FromControl registration in other grouping AbstractControl types</li>
+  <li>Additional error message and overrides to dictionary ones (correct message for: Cross validation)</li>
+</ol>
+
+DONE:
+<ol>
+  <li>Label as parameter</li>
+  <li>Automatic error messages from dictionary</li>
+  <li>(optional) Automatic FromControl initialization</li>
+  <li>(optional) Automatic FromControl registration in FormGroup</li>
+  <li>WCAG:
+    <ul>
+      <li>aria-describedby (connection between input and error message)</li>
+      <li>label "for" attribute</li>
+    </ul>
+  </li>
   <li>Validators as parameter</li>
-  <li>Special for required validator</li>
+  <li>Special for required validator: adding * to label and validator</li>
+  <li>Input color for validation success (green) and failure (red)</li>
+  <li>Disabled</li>
+  <li>Value changing on field on action/Value changing from outside</li>
   <li>Cross fields validation</li>
 </ol>
+
+<!--<mas-heavy2 depth="5"></mas-heavy2>-->

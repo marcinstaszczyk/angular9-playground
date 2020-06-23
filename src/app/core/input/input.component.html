@@ -2,15 +2,18 @@
 
   <label *ngIf="label"
          class="mas-form-group__label"
-         [class.mas-form-group__label--required]="true"
+         [class.mas-form-group__label--required]="required"
          [for]="id">{{label}}</label>
 
   <input type="text"
          class="mas-form-group__input"
+         [ngClass]="['mas-form-group__input--' + validityState]"
          [id]="id"
          [formControl]="control"
          [attr.name]="name"
-         [attr.aria-describedby]="id + '--error'">
+         [attr.placeholder]="placeholder"
+         [attr.aria-describedby]="id + '--error'"
+         [attr.disabled]="disabled">
 
   <mas-validation-messages
     class="mas-form-group__error"

@@ -7,7 +7,7 @@ import { InputComponent } from './core/input/input.component';
 import { FormComponent } from './form/form.component';
 import { ValidationMessagesComponent } from './core/validation-messages/validation-messages.component';
 import './core/angular/AbstractControl-modified';
-import './core/angular/AsyncPipe-modified';
+// import './core/angular/AsyncPipe-modified';
 
 @NgModule({
   declarations: [

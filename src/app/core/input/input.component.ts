@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   Host,
   Input,
@@ -15,10 +15,11 @@ import {
   FormControl,
   FormGroup,
   FormGroupDirective,
-  FormGroupName,
+  FormGroupName, ValidatorFn,
   Validators
 } from '@angular/forms';
 import { BaseComponent } from '../base/BaseComponent';
+import { tap } from 'rxjs/operators';
 
 let inputCounter = 0;
 
@@ -32,16 +33,22 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
 
   @Input() id = 'input' + ++inputCounter;
   @Input() name: string | undefined;
-  @Input() controlName: string | undefined;
   @Input() label: string | undefined;
+  @Input() placeholder: string | undefined;
+  @Input() controlName: string | undefined;
   @Input() formGroup: FormGroup | undefined;
+  @Input() required: boolean | undefined;
   @Input() disabled: boolean | undefined;
+  @Input() validators: ValidatorFn | ValidatorFn[] | undefined;
+  @Input() validationDependencies: FormControl | FormControl[] | undefined;
 
   control!: FormControl;
+  validityState!: 'untouched' | 'valid' | 'invalid';
 
   private controlSelfAdded = false;
 
-  constructor(@Optional() @Host() @SkipSelf() private readonly parentControlContainer: ControlContainer | null) {
+  constructor(public changeDetectorRef: ChangeDetectorRef,
+              @Optional() @Host() @SkipSelf() private readonly parentControlContainer: ControlContainer | null) {
     super();
   }
 
@@ -49,6 +56,8 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
     this.validateInputParameters();
     this.initFormGroup();
     this.initFormControl();
+    this.initValidityState();
+    this.initValidationDependencies();
   }
 
   ngOnDestroy(): void {
@@ -57,13 +66,13 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
     }
   }
 
-  private validateInputParameters() {
+  private validateInputParameters(): void {
     if (!this.name && !this.controlName) {
       throw new Error('Attribute "name" or "controlName" for "mas-input" is required');
     }
   }
 
-  private initFormGroup() {
+  private initFormGroup(): void {
     if (!this.formGroup) {
       this.formGroup = this.getFormGroupFromParent();
     }
@@ -79,7 +88,7 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
     return undefined;
   }
 
-  private initFormControl() {
+  private initFormControl(): void {
     const controlName = this.formControlName;
     if (!this.control) {
       if (this.formGroup && this.formGroup.contains(controlName)) {
@@ -90,7 +99,7 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
           throw new Error(`Control found for name '${controlName}' is not instance of FormControl.`);
         }
       } else {
-        this.control = new FormControl('', [Validators.required, Validators.minLength(2), Validators.email]);
+        this.control = this.buildFormControl();
       }
     }
 
@@ -102,6 +111,49 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
 
   private get formControlName(): string {
     return (this.controlName || this.name)!;
+  }
+
+  private buildFormControl(): FormControl {
+    let validators: ValidatorFn[] = [];
+    if (Array.isArray(this.validators)) {
+      validators = validators.concat(this.validators);
+    } else if (this.validators) {
+      validators.push(this.validators);
+    }
+    if (this.required && validators.indexOf(Validators.required) === -1) {
+      validators.push(Validators.required);
+    }
+
+    return new FormControl('', validators);
+  }
+
+  private initValidityState(): void {
+    this.async(this.control.statusChanges);
+    // this.async('validityState', this.control.statusChanges.pipe(
+    //   startWith(1),
+    //   map(this.getValidityState),
+    // ));
+  }
+
+  // private getValidityState = () => {
+  //   if (!this.control.errors) {
+  //     return 'valid';
+  //   } else {
+  //     return this.control.touched ? 'invalid' : 'untouched';
+  //   }
+  // }
+
+  private initValidationDependencies(): void {
+    if (this.validationDependencies) {
+      const dependencies = Array.isArray(this.validationDependencies) ? this.validationDependencies : [this.validationDependencies];
+      dependencies.forEach((dependency: FormControl) => {
+        this.async(dependency.valueChanges.pipe(
+          tap(() => {
+            this.control.updateValueAndValidity();
+          })
+        ));
+      });
+    }
   }
 
   // get formDirective(): any {
