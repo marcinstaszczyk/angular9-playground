@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import VALIDATION_MESSAGES from './validation-messages';
+import VALIDATION_MESSAGES, { ValidationMessagesDict } from './validation-messages';
 import { map, startWith } from 'rxjs/operators';
 import { BaseComponent } from '../base/BaseComponent';
 
@@ -15,6 +15,7 @@ import { BaseComponent } from '../base/BaseComponent';
 export class ValidationMessagesComponent extends BaseComponent implements OnInit {
 
   @Input() control!: FormControl;
+  @Input() validationMessages: ValidationMessagesDict | undefined;
 
   message!: string | null;
 
@@ -35,7 +36,8 @@ export class ValidationMessagesComponent extends BaseComponent implements OnInit
       return null;
     }
     const errorKey = Object.keys(errors)[0];
-    const messageFunction = VALIDATION_MESSAGES[errorKey] || VALIDATION_MESSAGES.DEFAULT;
+    const messageFunction = this.validationMessages && this.validationMessages[errorKey] ||
+                            VALIDATION_MESSAGES[errorKey] || VALIDATION_MESSAGES.DEFAULT;
     return messageFunction(errorKey, errors[errorKey]);
   }
 

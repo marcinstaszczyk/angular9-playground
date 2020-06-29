@@ -20,6 +20,7 @@ import {
 } from '@angular/forms';
 import { BaseComponent } from '../base/BaseComponent';
 import { tap } from 'rxjs/operators';
+import { ValidationMessagesDict } from '../validation-messages/validation-messages';
 
 let inputCounter = 0;
 
@@ -41,6 +42,7 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() disabled: boolean | undefined;
   @Input() validators: ValidatorFn | ValidatorFn[] | undefined;
   @Input() validationDependencies: FormControl | FormControl[] | undefined;
+  @Input() validationMessages: ValidationMessagesDict | undefined;
 
   control!: FormControl;
   validityState!: 'untouched' | 'valid' | 'invalid';

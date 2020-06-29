@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { BaseComponent } from '../core/base/BaseComponent';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import { m, ValidationMessagesDict } from '../core/validation-messages/validation-messages';
 
 @Component({
   selector: 'mas-form',
@@ -16,7 +19,13 @@ export class FormComponent extends BaseComponent implements OnInit {
   form = new FormGroup({
     address: new FormGroup({}),
     crossValidation: new FormGroup({}),
+    reactiveControl: new FormControl('', Validators.required, asyncValidator)
   });
+
+  customValidationMessages: ValidationMessagesDict = {
+    equality: m`Values in fields must match.`,
+    required: m`You shall not pass ;-)`
+  };
 
   submitted = false;
 
@@ -54,6 +63,11 @@ export class FormComponent extends BaseComponent implements OnInit {
       return null;
     }
   }
+
 }
 
-
+const asyncValidator: AsyncValidatorFn = (control: AbstractControl) => {
+  return of(control.value.length % 2 === 0 ? null : { evenLength: 'error' }).pipe(
+    delay(1000)
+  );
+};

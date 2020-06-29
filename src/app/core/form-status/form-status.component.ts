@@ -14,6 +14,7 @@ export class FormStatusComponent extends BaseComponent implements OnInit, AfterV
   @Input() submitted = false;
 
   value: any;
+  status!: string;
 
   constructor(public changeDetectorRef: ChangeDetectorRef) {
     super();
@@ -26,6 +27,7 @@ export class FormStatusComponent extends BaseComponent implements OnInit, AfterV
     this.async('value', this.form.valueChanges.pipe(
       tap(() => this.submitted = false)
     ));
+    this.async('status', this.form.statusChanges);
   }
 
 }

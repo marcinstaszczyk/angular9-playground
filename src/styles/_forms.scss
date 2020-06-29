@@ -17,7 +17,7 @@
     font-size: 1em;
     padding: .2em .4em;
 
-    &.ng-valid {
+    &.ng-valid.ng-dirty {
       border-color: var.$color-success;
       outline-color: var.$color-success;
     }
