@@ -58,6 +58,25 @@
              required="true"
   ></mas-input>
 
+  Select core:<br/>
+  <i>No label or auto error messages. Just plain ControlValueAccessor implementation.</i>
+  <mas-select-core class="mas-form-group__input"
+                   formControlName="selectText"
+                   [items]="selectItems"></mas-select-core>
+  <br/>
+  <i>But can have any template.</i>
+  <mas-select-core class="mas-form-group__input"
+                   formControlName="selectWithIcon"
+                   [items]="selectUserItems"
+                   [labelTemplate]="selectUserTemplate"></mas-select-core>
+  <ng-template #selectUserTemplate let-user="data">
+    <div class="mas-user-badge">
+      <i class="mas-user-badge__icon fa fa-{{user.icon.name}}" aria-hidden="true"></i>
+      <div class="mas-user-badge__name">{{user.name}}</div>
+    </div>
+  </ng-template>
+  <br/>
+
   <button (click)="submit()">Submit</button>
 </form>
 <br/>
@@ -75,11 +94,12 @@ TODO:
   <li>Form level validators</li>
   <li>Form level messages</li>
   <li>Second input (select) and multiple inputs generalisation</li>
-  <li>Select with async items load</li>
-  <li>Select with autocomplete / async search</li>
   <li>(optional) Automatic FromControl registration in other grouping AbstractControl types</li>
   <li>"Generic" input from DataType (object which describes all data for input except "name" and "label"</li>
   <li>Auto form from configuration (Array<[name,label,dataType]>+"submit handle")</li>
+  <li>Select-core core hide expand on blur</li>
+  <li>Select-core autofocus on search</li>
+  <li>Select-core arrows movement and selection with enter (also right after search)</li>
 </ol>
 
 DONE:
@@ -103,6 +123,8 @@ DONE:
   <li>Cross fields validation</li>
   <li>Async validators (done by manually creating FormControl</li>
   <li>Additional error message and overrides to dictionary ones</li>
+  <li>Select-core with async items load</li>
+  <li>Select-core with autocomplete / async search</li>
 </ol>
 
 <!--<mas-heavy2 depth="5"></mas-heavy2>-->

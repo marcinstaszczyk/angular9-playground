@@ -1,0 +1,30 @@
+<div class="mas-select-core__value" (click)="toggleOptions()">
+  <ng-container *ngIf="selectedItem; else placeholderTemplate">
+    <ng-container *ngTemplateOutlet="labelTemplate || defaultTemplate; context: { data: selectedItem?.data }"></ng-container>
+  </ng-container>
+  <ng-template #placeholderTemplate>{{placeholder}}</ng-template>
+
+  <i class="mas-select-core__expand-icon fa fa-chevron-down"></i>
+</div>
+
+<div class="mas-select-core__items-container"
+     [ngClass]="{ 'mas-select-core__items-container--expanded': expanded }">
+
+  <input *ngIf="withSearch"
+         type="text"
+         (input)="doSearch($event)">
+
+  <div class="mas-select-core__items">
+    <div *ngFor="let item of selectItems"
+         class="mas-select-core__item"
+         [ngClass]="{'mas-select-core__item--selected': item.value === selectedValue}"
+         (click)="selectItem(item)">
+      <ng-container *ngTemplateOutlet="labelTemplate || defaultTemplate; context: { data: item.data }"></ng-container>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #defaultTemplate let-data="data">
+  {{data}}
+</ng-template>

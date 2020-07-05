@@ -10,6 +10,7 @@ import './core/angular/AbstractControl-modified';
 import { HeavyComponent } from './test/heavy/heavy.component';
 import { Heavy2Component } from './test/heavy2/heavy2.component';
 import { FormStatusComponent } from './core/form-status/form-status.component';
+import { SelectCoreComponent } from './core/select-core/select-core.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormStatusComponent } from './core/form-status/form-status.component';
     HeavyComponent,
     Heavy2Component,
     FormStatusComponent,
+    SelectCoreComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+@use "variables" as var;
+
+.mas-user-badge {
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    font-size: 2em;
+    width: 1.5em;
+  }
+
+  &__name {
+
+  }
+}

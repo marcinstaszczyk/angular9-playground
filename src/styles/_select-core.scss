@@ -1,0 +1,55 @@
+@use "variables" as var;
+
+.mas-select-core {
+  display: block;
+  position: relative;
+  border: 1px solid #777;
+
+  &__value {
+    line-height: 1.3;
+    min-height: 1.2em;
+    display: flex;
+    align-items: center;
+  }
+
+  &__expand-icon {
+    position: absolute;
+    right: .3em;
+  }
+
+  &__items-container {
+    position: absolute;
+    background-color: var.$bg-color;
+    left: 0;
+    right: 0;
+    margin-top: .3em;
+    max-height: 40vw;
+    border: 1px solid #aaa;
+    border-top: none;
+    z-index: 1;
+
+    display: none;
+
+    &--expanded {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__items {
+    overflow: hidden auto;
+  }
+
+  &__item {
+    cursor: pointer;
+    padding: .2em .4em;
+
+    &--selected {
+      background-color: #eee;
+    }
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}
