@@ -1,0 +1,24 @@
+@use "src/styles/variables" as var;
+
+.mas-form-grid {
+  @media (min-width: 500px) {
+    $grid-gutter: 1em;
+    display: flex;
+    margin-right: -$grid-gutter;
+
+    &__item {
+      width: calc(50% - #{$grid-gutter});
+      margin-right: $grid-gutter;
+
+      &--auto {
+        flex-grow: 1;
+      }
+    }
+
+    &__button {
+      font-size: 1em;
+      width: auto;
+      align-self: center;
+    }
+  }
+}

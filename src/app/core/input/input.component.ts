@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Host,
+  HostBinding,
   Input,
   OnDestroy,
   OnInit,
@@ -21,6 +22,7 @@ import { InputBaseComponent } from '../input-base/InputBaseComponent';
 export class InputComponent extends InputBaseComponent implements OnInit, OnDestroy {
 
   @Input() placeholder: string | undefined;
+  @HostBinding() class = 'mas-form-group';
 
   constructor(public changeDetectorRef: ChangeDetectorRef,
               @Optional() @Host() @SkipSelf() protected readonly parentControlContainer: ControlContainer | null) {
