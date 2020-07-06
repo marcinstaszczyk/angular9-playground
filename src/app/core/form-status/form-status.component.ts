@@ -6,7 +6,7 @@ import { BaseComponent } from '../base/BaseComponent';
 @Component({
   selector: 'mas-form-status[form]',
   templateUrl: './form-status.component.html',
-  styleUrls: ['./form-status.component.scss']
+  styleUrls: ['./form-status.component.scss'],
 })
 export class FormStatusComponent extends BaseComponent implements OnInit, AfterViewInit {
 
@@ -25,7 +25,7 @@ export class FormStatusComponent extends BaseComponent implements OnInit, AfterV
 
   ngAfterViewInit() {
     this.async('value', this.form.valueChanges.pipe(
-      tap(() => this.submitted = false)
+      tap(() => this.submitted = false),
     ));
     this.async('status', this.form.statusChanges);
   }

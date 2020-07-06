@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import VALIDATION_MESSAGES, { ValidationMessagesDict } from './validation-messages';
+import { VALIDATION_MESSAGES, ValidationMessagesDict } from './validation-messages';
 import { map, startWith } from 'rxjs/operators';
 import { BaseComponent } from '../base/BaseComponent';
-
-
 
 @Component({
   selector: 'mas-validation-messages[control]',
   templateUrl: './validation-messages.component.html',
   styleUrls: ['./validation-messages.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ValidationMessagesComponent extends BaseComponent implements OnInit {
 

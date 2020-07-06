@@ -4,7 +4,7 @@ import { BaseComponent } from './core/base/BaseComponent';
 @Component({
   selector: 'mas-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent extends BaseComponent implements OnInit {
 

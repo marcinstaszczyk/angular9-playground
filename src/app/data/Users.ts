@@ -1,7 +1,7 @@
 import { User } from './User';
 import { Icon } from './Icon';
 
-const USERS: User[] = [
+export const USERS: User[] = [
   new User(1, 'John', new Icon('car')),
   new User(2, 'Rachel', new Icon('heart')),
   new User(3, 'Tom', new Icon('rocket')),
@@ -13,5 +13,3 @@ const USERS: User[] = [
   new User(9, 'Janet', new Icon('bicycle')),
   new User(10, 'Martin', new Icon('plane')),
 ];
-
-export default USERS;

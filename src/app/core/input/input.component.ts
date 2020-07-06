@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  SkipSelf
+  SkipSelf,
 } from '@angular/core';
 import {
   AbstractFormGroupDirective,
@@ -16,7 +16,7 @@ import {
   FormGroup,
   FormGroupDirective,
   FormGroupName, ValidatorFn,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { BaseComponent } from '../base/BaseComponent';
 import { tap } from 'rxjs/operators';
@@ -28,11 +28,11 @@ let inputCounter = 0;
   selector: 'mas-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  @Input() id = 'input' + ++inputCounter;
+  @Input() id = `input${(inputCounter = inputCounter + 1)}`;
   @Input() name: string | undefined;
   @Input() label: string | undefined;
   @Input() placeholder: string | undefined;
@@ -83,7 +83,8 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
   private getFormGroupFromParent(): FormGroup | undefined {
     if (this.parentControlContainer instanceof FormGroupDirective) {
       return this.parentControlContainer.form;
-    } else if (this.parentControlContainer instanceof FormGroupName) {
+    }
+    if (this.parentControlContainer instanceof FormGroupName) {
       return this.parentControlContainer.control;
     }
 
@@ -152,7 +153,7 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
         this.async(dependency.valueChanges.pipe(
           tap(() => {
             this.control.updateValueAndValidity();
-          })
+          }),
         ));
       });
     }

@@ -20,11 +20,12 @@ export class BaseComponent implements DoCheck, OnDestroy {
                                                 this: T, propertyOrObservable: K | Observable<any>, observable?: Observable<T[K]>): void {
     let property: K | undefined;
     if (propertyOrObservable instanceof Observable) {
+      // tslint:disable-next-line:no-parameter-reassignment
       observable = propertyOrObservable;
     } else {
       property = propertyOrObservable;
     }
-    this.subscriptions.push(observable!.subscribe(value => {
+    this.subscriptions.push(observable!.subscribe((value: T[K]) => {
       if (property) {
         this[property] = value;
       }

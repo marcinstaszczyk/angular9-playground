@@ -17,7 +17,7 @@ export class HeavyComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     const div = this.renderer.createElement('div');
     this.renderer.setStyle(div, 'visibility', 'hidden');
-    for (let i = 0; i < 100000; ++i) {
+    for (let i = 0; i < 100000; i = i + 1) {
       const item = this.renderer.createElement('div');
       const text = this.renderer.createText('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       this.renderer.appendChild(item, text);
@@ -27,7 +27,7 @@ export class HeavyComponent extends BaseComponent implements OnInit {
   }
 
   increase() {
-    this.value++;
+    this.value = this.value + 1;
   }
 
 }

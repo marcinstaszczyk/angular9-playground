@@ -9,7 +9,7 @@ import {
   OnInit,
   SimpleChanges,
   TemplateRef,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
@@ -25,8 +25,8 @@ export type SelectSearch<Value, ItemData> = (search: string | null) => Observabl
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SelectCoreComponent),
-    multi: true
-  }]
+    multi: true,
+  }],
 })
 export class SelectCoreComponent<Value, Data> implements ControlValueAccessor, OnInit, AfterViewInit, OnChanges {
 
@@ -53,7 +53,6 @@ export class SelectCoreComponent<Value, Data> implements ControlValueAccessor, O
   private onChange = (value: Value) => {};
   // Function to call when the input is touched (when a star is clicked).
   private onTouched = () => {};
-
 
   constructor(public changeDetectorRef: ChangeDetectorRef) {
   }
@@ -164,7 +163,7 @@ export class SelectCoreComponent<Value, Data> implements ControlValueAccessor, O
       this.selectedItem = undefined;
     } else {
       this.selectedItem = this.selectItems.find(
-        (selectItem) => this.selectedValue === selectItem.value);
+        selectItem => this.selectedValue === selectItem.value);
     }
   }
 
