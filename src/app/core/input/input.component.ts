@@ -32,7 +32,7 @@ let inputCounter = 0;
 })
 export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  @Input() id = `input${(inputCounter = inputCounter + 1)}`;
+  @Input() inputId = `input${(inputCounter = inputCounter + 1)}`;
   @Input() name: string | undefined;
   @Input() label: string | undefined;
   @Input() placeholder: string | undefined;
@@ -45,7 +45,6 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() validationMessages: ValidationMessagesDict | undefined;
 
   control!: FormControl;
-  validityState!: 'untouched' | 'valid' | 'invalid';
 
   private controlSelfAdded = false;
 
@@ -132,19 +131,7 @@ export class InputComponent extends BaseComponent implements OnInit, OnDestroy {
 
   private initValidityState(): void {
     this.async(this.control.statusChanges);
-    // this.async('validityState', this.control.statusChanges.pipe(
-    //   startWith(1),
-    //   map(this.getValidityState),
-    // ));
   }
-
-  // private getValidityState = () => {
-  //   if (!this.control.errors) {
-  //     return 'valid';
-  //   } else {
-  //     return this.control.touched ? 'invalid' : 'untouched';
-  //   }
-  // }
 
   private initValidationDependencies(): void {
     if (this.validationDependencies) {

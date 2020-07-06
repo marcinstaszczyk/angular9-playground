@@ -3,22 +3,21 @@
   <label *ngIf="label"
          class="mas-form-group__label"
          [class.mas-form-group__label--required]="required"
-         [for]="id">{{label}}</label>
+         [for]="inputId">{{label}}</label>
 
   <input type="text"
          class="mas-form-group__input"
-         [ngClass]="['mas-form-group__input--' + validityState]"
-         [id]="id"
+         [id]="inputId"
          [formControl]="control"
          [attr.name]="name"
          [attr.placeholder]="placeholder"
-         [attr.aria-describedby]="id + '--error'"
+         [attr.aria-describedby]="inputId + '--error'"
          [attr.disabled]="disabled">
 
   <mas-validation-messages
     class="mas-form-group__error"
     [control]="control"
-    [id]="id + '--error'"
+    [id]="inputId + '--error'"
     [validationMessages]="validationMessages">
   </mas-validation-messages>
 
