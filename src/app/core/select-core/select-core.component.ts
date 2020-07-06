@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   forwardRef,
@@ -22,6 +23,7 @@ export type SelectSearch<Value, ItemData> = (search: string | null) => Observabl
   selector: 'mas-select-core[items]',
   templateUrl: './select-core.component.html',
   styleUrls: ['./select-core.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SelectCoreComponent),
