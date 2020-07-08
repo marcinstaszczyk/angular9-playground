@@ -18,9 +18,9 @@ export class Heavy2Component extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setInterval(() => {
-      this.value = this.value + 1;
-    });
+    // setInterval(() => {
+    //   this.value = this.value + 1;
+    // });
   }
 
 }

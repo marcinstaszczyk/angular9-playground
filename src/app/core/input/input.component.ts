@@ -2,8 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
+  forwardRef,
   Host,
-  HostBinding,
   Input,
   OnDestroy,
   OnInit,
@@ -16,25 +17,19 @@ import { InputBaseComponent } from '../input-base/InputBaseComponent';
 @Component({
   selector: 'mas-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: InputBaseComponent, useExisting: forwardRef(() => InputComponent) },
+  ],
 })
 export class InputComponent extends InputBaseComponent implements OnInit, OnDestroy {
 
   @Input() placeholder: string | undefined;
-  @HostBinding() class = 'mas-form-group';
 
-  constructor(public changeDetectorRef: ChangeDetectorRef,
+  constructor(public readonly changeDetectorRef: ChangeDetectorRef,
+              public readonly elementRef: ElementRef,
               @Optional() @Host() @SkipSelf() protected readonly parentControlContainer: ControlContainer | null) {
-    super(changeDetectorRef, parentControlContainer);
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-  }
-
-  ngOnDestroy() {
-    super.ngOnDestroy();
+    super(changeDetectorRef, elementRef, parentControlContainer);
   }
 
 }

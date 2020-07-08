@@ -77,6 +77,14 @@
   </ng-template>
   <br/>
 
+  <mas-select name="select"
+              label="Select with label and validation"
+              required="true"
+              [items]="selectUserItems"
+              [labelTemplate]="selectUserTemplate">
+
+  </mas-select>
+
   <button (click)="submit()">Submit</button>
 </form>
 <br/>
@@ -93,13 +101,14 @@ TODO:
   <li>Test if-s on components</li>
   <li>Form level validators</li>
   <li>Form level messages</li>
-  <li>Second input (select) and multiple inputs generalisation</li>
+  <li>Inputs generalisation for radio/checkboxes</li>
   <li>(optional) Automatic FromControl registration in other grouping AbstractControl types</li>
   <li>"Generic" input from DataType (object which describes all data for input except "name" and "label"</li>
   <li>Auto form from configuration (Array<[name,label,dataType]>+"submit handle")</li>
   <li>Select-core core hide expand on blur</li>
   <li>Select-core autofocus on search</li>
   <li>Select-core arrows movement and selection with enter (also right after search)</li>
+  <li>Disabled on select</li>
 </ol>
 
 DONE:
@@ -125,6 +134,7 @@ DONE:
   <li>Additional error message and overrides to dictionary ones</li>
   <li>Select-core with async items load</li>
   <li>Select-core with autocomplete / async search</li>
+  <li>Second input (select) and multiple inputs generalisation</li>
 </ol>
 
 <!--<mas-heavy2 depth="5"></mas-heavy2>-->

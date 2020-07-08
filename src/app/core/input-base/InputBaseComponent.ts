@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractFormGroupDirective,
   ControlContainer,
@@ -32,8 +32,10 @@ export class InputBaseComponent extends BaseComponent implements OnInit, OnDestr
 
   private controlSelfAdded = false;
 
-  constructor(public changeDetectorRef: ChangeDetectorRef,
-              protected readonly parentControlContainer: ControlContainer | null) {
+  constructor(public readonly changeDetectorRef: ChangeDetectorRef,
+              public readonly elementRef: ElementRef,
+              protected readonly parentControlContainer: ControlContainer | null,
+              ) {
     super();
   }
 

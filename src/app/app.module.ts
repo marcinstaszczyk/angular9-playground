@@ -11,6 +11,8 @@ import { HeavyComponent } from './test/heavy/heavy.component';
 import { Heavy2Component } from './test/heavy2/heavy2.component';
 import { FormStatusComponent } from './core/form-status/form-status.component';
 import { SelectCoreComponent } from './core/select-core/select-core.component';
+import { InputBaseDirective } from './core/input-base/input-base.directive';
+import { SelectComponent } from './core/select/select.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +24,17 @@ import { SelectCoreComponent } from './core/select-core/select-core.component';
     Heavy2Component,
     FormStatusComponent,
     SelectCoreComponent,
+    InputBaseDirective,
+    SelectComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
   ],
   providers: [],
+  entryComponents: [
+    ValidationMessagesComponent,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
