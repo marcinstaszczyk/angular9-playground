@@ -3,60 +3,61 @@
 <form [formGroup]="form">
 
   <div class="mas-form-grid">
-    <mas-input class="mas-form-grid__item"
-               controlName="firstName"
-               label="First Name"
-               placeholder="Some placeholder"
-               required="true"
-    ></mas-input>
-    <mas-input class="mas-form-grid__item"
-               name="surname"
-               label="Surname"
-               required="true"
-               [validationMessages]="customValidationMessages"
-    ></mas-input>
+    <mas-input-text class="mas-form-grid__item"
+                    controlName="firstName"
+                    label="First Name"
+                    placeholder="Some placeholder"
+                    required="true"
+    ></mas-input-text>
+    <mas-input-text class="mas-form-grid__item"
+                    name="surname"
+                    label="Surname"
+                    required="true"
+                    [validationMessages]="customValidationMessages"
+    ></mas-input-text>
   </div>
 
   <div class="mas-form-grid">
-    <mas-input class="mas-form-grid__item" style="flex-grow: 1"
-               name="email"
-               label="Email"
-               required="true"
-               [validators]="emailValidator"
-    ></mas-input>
+    <mas-input-text class="mas-form-grid__item"
+                    style="flex-grow: 1"
+                    name="email"
+                    label="Email"
+                    required="true"
+                    [validators]="emailValidator"
+    ></mas-input-text>
     <button class="mas-form-grid__item mas-form-grid__button" (click)="setValue()">Set some value</button>
   </div>
 
-  <mas-input name="twoValidators"
-             label="Two validators"
-             required="true"
-             placeholder="Email with 5 characters or more"
-             [validators]="twoValidators"
-  ></mas-input>
+  <mas-input-text name="twoValidators"
+                  label="Two validators"
+                  required="true"
+                  placeholder="Email with 5 characters or more"
+                  [validators]="twoValidators"
+  ></mas-input-text>
 
   <div formGroupName="address">
     <h3>Address:</h3>
-    <mas-input name="city" label="City" required="true"></mas-input>
-    <mas-input name="street" label="Street"></mas-input>
+    <mas-input-text name="city" label="City" required="true"></mas-input-text>
+    <mas-input-text name="street" label="Street"></mas-input-text>
   </div>
 
   <div formGroupName="crossValidation">
     <h3>Cross validation:</h3>
-    <mas-input name="field1" label="Field1" required="true"></mas-input>
-    <mas-input name="field2"
-               label="Field2"
-               required="true"
-               [validators]="field1EqField2Validator"
-               [validationDependencies]="field1Control"
-               [validationMessages]="customValidationMessages"
-    ></mas-input>
+    <mas-input-text name="field1" label="Field1" required="true"></mas-input-text>
+    <mas-input-text name="field2"
+                    label="Field2"
+                    required="true"
+                    [validators]="field1EqField2Validator"
+                    [validationDependencies]="field1Control"
+                    [validationMessages]="customValidationMessages"
+    ></mas-input-text>
   </div>
 
   <h3>Reactive (standard) FormControl initialisation + async validator</h3>
-  <mas-input name="reactiveControl"
-             label="Reactive Control"
-             required="true"
-  ></mas-input>
+  <mas-input-text name="reactiveControl"
+                  label="Reactive Control"
+                  required="true"
+  ></mas-input-text>
 
   Select core:<br/>
   <i>No label or auto error messages. Just plain ControlValueAccessor implementation.</i>
@@ -82,7 +83,6 @@
               required="true"
               [items]="selectUserItems"
               [labelTemplate]="selectUserTemplate">
-
   </mas-select>
 
   <button (click)="submit()">Submit</button>

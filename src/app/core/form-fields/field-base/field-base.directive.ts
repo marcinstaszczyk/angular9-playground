@@ -1,15 +1,15 @@
 import { ComponentFactoryResolver, Directive, ElementRef, Input, OnInit, Renderer2, SkipSelf, ViewContainerRef } from '@angular/core';
-import { InputBaseComponent } from './InputBaseComponent';
+import { FieldBaseComponent } from './FieldBaseComponent';
 import { ValidationMessagesComponent } from '../validation-messages/validation-messages.component';
 
 @Directive({
-  selector: '[masInputBase]',
+  selector: '[masFieldBase]',
 })
-export class InputBaseDirective implements OnInit {
+export class FieldBaseDirective implements OnInit {
 
-  @Input() masInputBase: string | undefined;
+  @Input() masFieldBase: string | undefined;
 
-  constructor(@SkipSelf() private readonly wrappingInput: InputBaseComponent,
+  constructor(@SkipSelf() private readonly wrappingInput: FieldBaseComponent,
               private renderer: Renderer2,
               private inputCore: ElementRef,
               private ref: ViewContainerRef,
@@ -43,7 +43,7 @@ export class InputBaseDirective implements OnInit {
     }
 
     /*
-    <[input|select|etc.]
+    <[input-text|select|etc.]
        masInputBase
        class="mas-form-group__input"
        [id]="inputId"

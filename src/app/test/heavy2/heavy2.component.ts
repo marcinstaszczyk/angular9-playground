@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { BaseComponent } from '../../core/base/BaseComponent';
+import { BaseComponent } from '../../core/base-component/BaseComponent';
 
 @Component({
   selector: 'mas-heavy2[depth]',

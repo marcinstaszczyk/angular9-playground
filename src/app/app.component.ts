@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { BaseComponent } from './core/base/BaseComponent';
+import { BaseComponent } from './core/base-component/BaseComponent';
 
 @Component({
   selector: 'mas-root',

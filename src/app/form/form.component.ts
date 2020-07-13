@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { BaseComponent } from '../core/base/BaseComponent';
+import { BaseComponent } from '../core/base-component/BaseComponent';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { m, ValidationMessagesDict } from '../core/validation-messages/validation-messages';
-import { SelectSearch } from '../core/select-core/select-core.component';
-import { SelectItem } from '../core/select-core/SelectItem';
+import { m, ValidationMessagesDict } from '../core/form-fields/validation-messages/validation-messages';
+import { SelectSearch } from '../core/core-inputs/select-core/select-core.component';
+import { SelectItem } from '../core/core-inputs/select-core/SelectItem';
 import { User } from '../data/User';
 import { USERS } from '../data/Users';
 

@@ -12,20 +12,20 @@ import {
   SkipSelf,
   TemplateRef,
 } from '@angular/core';
-import { InputBaseComponent } from '../input-base/InputBaseComponent';
+import { FieldBaseComponent } from '../field-base/FieldBaseComponent';
 import { ControlContainer } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SelectableItems, SelectSearch } from '../select-core/select-core.component';
+import { SelectableItems, SelectSearch } from '../../core-inputs/select-core/select-core.component';
 
 @Component({
   selector: 'mas-select[items]',
   templateUrl: './select.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: InputBaseComponent, useExisting: forwardRef(() => SelectComponent) },
+    { provide: FieldBaseComponent, useExisting: forwardRef(() => SelectComponent) },
   ],
 })
-export class SelectComponent<Value, Data> extends InputBaseComponent implements OnInit, OnDestroy {
+export class SelectComponent<Value, Data> extends FieldBaseComponent implements OnInit, OnDestroy {
 
   @Input() placeholder: string | undefined;
   @Input() items!: SelectableItems<Value, Data> | Observable<SelectableItems<Value, Data>> | SelectSearch<Value, Data>;

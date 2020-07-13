@@ -9,13 +9,13 @@ import {
   FormGroupName, ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { BaseComponent } from '../base/BaseComponent';
+import { BaseComponent } from '../../base-component/BaseComponent';
 import { tap } from 'rxjs/operators';
 import { ValidationMessagesDict } from '../validation-messages/validation-messages';
 
 let inputCounter = 0;
 
-export class InputBaseComponent extends BaseComponent implements OnInit, OnDestroy {
+export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestroy {
 
   @Input() inputId = `input${(inputCounter = inputCounter + 1)}`;
   @Input() name: string | undefined;
@@ -55,7 +55,7 @@ export class InputBaseComponent extends BaseComponent implements OnInit, OnDestr
 
   private validateInputParameters(): void {
     if (!this.name && !this.controlName) {
-      throw new Error('Attribute "name" or "controlName" for "mas-input-..." is required');
+      throw new Error(`Attribute "name" or "controlName" for "${this.constructor.name}" is required`);
     }
   }
 

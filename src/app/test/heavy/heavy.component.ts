@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { BaseComponent } from '../../core/base/BaseComponent';
+import { BaseComponent } from '../../core/base-component/BaseComponent';
 
 @Component({
   selector: 'mas-heavy',

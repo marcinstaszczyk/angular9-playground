@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } 
 import { FormControl } from '@angular/forms';
 import { VALIDATION_MESSAGES, ValidationMessagesDict } from './validation-messages';
 import { map, startWith } from 'rxjs/operators';
-import { BaseComponent } from '../base/BaseComponent';
+import { BaseComponent } from '../../base-component/BaseComponent';
 
 @Component({
   selector: 'mas-validation-messages[control]',
