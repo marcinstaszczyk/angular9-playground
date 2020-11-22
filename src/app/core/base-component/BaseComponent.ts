@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, DoCheck, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Directive, DoCheck, OnDestroy } from '@angular/core';
 // import { ɵmarkDirty as markDirty } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
-export class BaseComponent implements DoCheck, OnDestroy {
+@Directive() // tslint:disable-next-line:directive-class-suffix
+export abstract class BaseComponent implements DoCheck, OnDestroy {
 
   subscriptions: Subscription[] = [];
 

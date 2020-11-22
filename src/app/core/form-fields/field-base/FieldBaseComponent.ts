@@ -1,8 +1,6 @@
-import { ChangeDetectorRef, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import {
-  AbstractFormGroupDirective,
   ControlContainer,
-  FormArrayName,
   FormControl,
   FormGroup,
   FormGroupDirective,
@@ -15,6 +13,7 @@ import { ValidationMessagesDict } from '../validation-messages/validation-messag
 
 let inputCounter = 0;
 
+@Directive() // tslint:disable-next-line:directive-class-suffix
 export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestroy {
 
   @Input() inputId = `input${(inputCounter = inputCounter + 1)}`;
