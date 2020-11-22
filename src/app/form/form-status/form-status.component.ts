@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { tap } from 'rxjs/operators';
-import { BaseComponent } from '../../base-component/BaseComponent';
+import { BaseComponent } from '../../core/base-component/BaseComponent';
 
 @Component({
   selector: 'mas-form-status[form]',

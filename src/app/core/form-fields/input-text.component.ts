@@ -12,11 +12,17 @@ import {
   SkipSelf,
 } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
-import { FieldBaseComponent } from '../field-base/FieldBaseComponent';
+import { FieldBaseComponent } from './field-base/FieldBaseComponent';
 
 @Component({
   selector: 'mas-input-text',
-  templateUrl: './input-text.component.html',
+  template: `
+    <input type="text"
+           [masFieldBase]
+           [formControl]="control"
+           [attr.placeholder]="placeholder"
+           [attr.disabled]="disabled">
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: FieldBaseComponent, useExisting: forwardRef(() => InputTextComponent) },

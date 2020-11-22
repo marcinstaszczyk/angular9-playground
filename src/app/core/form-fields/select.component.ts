@@ -12,14 +12,22 @@ import {
   SkipSelf,
   TemplateRef,
 } from '@angular/core';
-import { FieldBaseComponent } from '../field-base/FieldBaseComponent';
+import { FieldBaseComponent } from './field-base/FieldBaseComponent';
 import { ControlContainer } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SelectableItems, SelectSearch } from '../../core-inputs/select-core/select-core.component';
+import { SelectableItems, SelectSearch } from '../core-inputs/select-core/select-core.component';
 
 @Component({
   selector: 'mas-select[items]',
-  templateUrl: './select.component.html',
+  template: `
+    <mas-select-core
+      [masFieldBase]
+      [items]="items"
+      [formControl]="control"
+      [labelTemplate]="labelTemplate"
+      [placeholder]="placeholder"
+    ></mas-select-core>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: FieldBaseComponent, useExisting: forwardRef(() => SelectComponent) },
