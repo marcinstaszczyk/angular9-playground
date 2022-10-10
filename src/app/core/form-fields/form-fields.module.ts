@@ -20,9 +20,6 @@ export const exports = [
     FieldBaseDirective,
     ValidationMessagesComponent,
   ],
-  entryComponents: [
-    ValidationMessagesComponent,
-  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { BaseComponent } from '../core/base-component/BaseComponent';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -20,12 +20,12 @@ export class FormComponent extends BaseComponent implements OnInit {
   emailValidator = Validators.email;
   twoValidators = [Validators.minLength(5), Validators.email];
 
-  form = new FormGroup({
-    address: new FormGroup({}),
-    crossValidation: new FormGroup({}),
-    reactiveControl: new FormControl('', Validators.required, asyncValidator),
-    selectText: new FormControl(),
-    selectWithIcon: new FormControl(),
+  form = new UntypedFormGroup({
+    address: new UntypedFormGroup({}),
+    crossValidation: new UntypedFormGroup({}),
+    reactiveControl: new UntypedFormControl('', Validators.required, asyncValidator),
+    selectText: new UntypedFormControl(),
+    selectWithIcon: new UntypedFormControl(),
   });
 
   customValidationMessages: ValidationMessagesDict = {
@@ -60,8 +60,8 @@ export class FormComponent extends BaseComponent implements OnInit {
     emailControl.markAsTouched();
   }
 
-  get field1Control(): FormControl {
-    return this.form.get('crossValidation')!.get('field1') as FormControl;
+  get field1Control(): UntypedFormControl {
+    return this.form.get('crossValidation')!.get('field1') as UntypedFormControl;
   }
 
   field1EqField2Validator: ValidatorFn = (field2Control: AbstractControl) => {
@@ -77,7 +77,7 @@ export class FormComponent extends BaseComponent implements OnInit {
     if (!search) {
       result = of(this.allItems);
     } else {
-      result = of(this.allItems.filter(item => item.includes(search)));
+      result = of(this.allItems.filter((item) => item.includes(search)));
     }
 
     return result.pipe(
@@ -90,7 +90,7 @@ export class FormComponent extends BaseComponent implements OnInit {
       return of(this.userItems);
     }
     // TODO "got you" that SelectableItem type is not working here
-    return of(this.userItems.filter(item => item.data.name.includes(search)));
+    return of(this.userItems.filter((item) => item.data.name.includes(search)));
   }
 
 }
@@ -111,5 +111,5 @@ function generateAllSelectItems(): string[] {
 }
 
 function generateAllUserSelectItems(): SelectItem<number, User>[] {
-  return USERS.map(user => new SelectItem(user.id, user));
+  return USERS.map((user) => new SelectItem(user.id, user));
 }

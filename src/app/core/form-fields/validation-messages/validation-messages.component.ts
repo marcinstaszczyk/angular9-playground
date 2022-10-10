@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { VALIDATION_MESSAGES, ValidationMessagesDict } from './validation-messages';
 import { map, startWith } from 'rxjs/operators';
 import { BaseComponent } from '../../base-component/BaseComponent';
@@ -12,7 +12,7 @@ import { BaseComponent } from '../../base-component/BaseComponent';
 })
 export class ValidationMessagesComponent extends BaseComponent implements OnInit {
 
-  @Input() control!: FormControl;
+  @Input() control!: UntypedFormControl;
   @Input() validationMessages: ValidationMessagesDict | undefined;
 
   message!: string | null;

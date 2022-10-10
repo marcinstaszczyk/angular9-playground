@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   ControlContainer,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormGroupDirective,
   FormGroupName, ValidatorFn,
   Validators,
@@ -20,14 +20,14 @@ export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestr
   @Input() name: string | undefined;
   @Input() label: string | undefined;
   @Input() controlName: string | undefined;
-  @Input() formGroup: FormGroup | undefined;
+  @Input() formGroup: UntypedFormGroup | undefined;
   @Input() required: boolean | undefined;
   @Input() disabled: boolean | undefined;
   @Input() validators: ValidatorFn | ValidatorFn[] | undefined;
-  @Input() validationDependencies: FormControl | FormControl[] | undefined;
+  @Input() validationDependencies: UntypedFormControl | UntypedFormControl[] | undefined;
   @Input() validationMessages: ValidationMessagesDict | undefined;
 
-  control!: FormControl;
+  control!: UntypedFormControl;
 
   private controlSelfAdded = false;
 
@@ -64,7 +64,7 @@ export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestr
     }
   }
 
-  private getFormGroupFromParent(): FormGroup | undefined {
+  private getFormGroupFromParent(): UntypedFormGroup | undefined {
     if (this.parentControlContainer instanceof FormGroupDirective) {
       return this.parentControlContainer.form;
     }
@@ -80,7 +80,7 @@ export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestr
     if (!this.control) {
       if (this.formGroup && this.formGroup.contains(controlName)) {
         const control = this.formGroup.get(controlName);
-        if (control instanceof FormControl) {
+        if (control instanceof UntypedFormControl) {
           this.control = control;
         } else {
           throw new Error(`Control found for name '${controlName}' is not instance of FormControl.`);
@@ -100,7 +100,7 @@ export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestr
     return (this.controlName || this.name)!;
   }
 
-  private buildFormControl(): FormControl {
+  private buildFormControl(): UntypedFormControl {
     let validators: ValidatorFn[] = [];
     if (this.required && validators.indexOf(Validators.required) === -1) {
       validators.push(Validators.required);
@@ -111,7 +111,7 @@ export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestr
       validators.push(this.validators);
     }
 
-    return new FormControl('', validators);
+    return new UntypedFormControl('', validators);
   }
 
   private initValidityState(): void {
@@ -121,7 +121,7 @@ export class FieldBaseComponent extends BaseComponent implements OnInit, OnDestr
   private initValidationDependencies(): void {
     if (this.validationDependencies) {
       const dependencies = Array.isArray(this.validationDependencies) ? this.validationDependencies : [this.validationDependencies];
-      dependencies.forEach((dependency: FormControl) => {
+      dependencies.forEach((dependency: UntypedFormControl) => {
         this.async(dependency.valueChanges.pipe(
           tap(() => {
             this.control.updateValueAndValidity();
